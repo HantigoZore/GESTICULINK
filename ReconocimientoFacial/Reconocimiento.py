@@ -1,31 +1,15 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import cv2
 from deepface import DeepFace
-from flask import Flask, request, jsonify
 import numpy as np
 import base64
-import serial
 
 app = Flask(__name__)
+CORS(app)  # habilita CORS para recibir peticiones desde cualquier origen
 
 emociones_permitidas = ["angry", "sad", "happy", "surprise"]
 porcentaje_minimo = 10
-
-# Configura el puerto COM correspondiente a tu ESP32
-SERIAL_PORT = 'COM3'  # Cambia 'COM3' por el puerto que corresponda en tu PC
-BAUD_RATE = 115200
-
-try:
-    ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
-except Exception as e:
-    ser = None
-    print(f"No se pudo abrir el puerto serial: {e}")
-
-def enviar_emocion_bluetooth(emocion):
-    if ser and ser.is_open:
-        try:
-            ser.write((emocion + '\n').encode())
-        except Exception as e:
-            print(f"Error enviando por Bluetooth: {e}")
 
 def detectar_emocion(frame):
     try:
@@ -40,17 +24,35 @@ def detectar_emocion(frame):
             emotion = "neutral"
         return emotion
     except Exception as e:
+        print(f"Error detectando emoción: {e}")
         return "error"
 
 @app.route('/emocion', methods=['POST'])
 def emocion():
+    print("Petición recibida")
     data = request.json
-    img_data = base64.b64decode(data['image'])
-    np_arr = np.frombuffer(img_data, np.uint8)
-    frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-    emocion_detectada = detectar_emocion(frame)
-    enviar_emocion_bluetooth(emocion_detectada)
-    return jsonify({'emocion': emocion_detectada})
+    img_data = data['image']
+
+    # Decodifica la imagen base64
+    if ',' in img_data:
+        img_data = img_data.split(",")[1]  # elimina prefijo data:image/png;base64, si existe
+
+    try:
+        img_bytes = base64.b64decode(img_data)
+        np_arr = np.frombuffer(img_bytes, np.uint8)
+        frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+        # Detecta la emoción
+        emocion_detectada = detectar_emocion(frame)
+
+        # Imprime en consola para verificación
+        print(f"Emoción recibida del HTML: {emocion_detectada}")
+        
+        # Devuelve la emoción al cliente
+        return jsonify({'emocion': emocion_detectada})
+    except Exception as e:
+        print(f"Error procesando imagen: {e}")
+        return jsonify({'error': 'no se pudo procesar la imagen'}), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+        app.run(host='127.0.0.1', port=5000, debug=True,)

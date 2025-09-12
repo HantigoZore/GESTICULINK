@@ -1,4 +1,6 @@
 flask
+flask-cors
 opencv-python
 deepface
+numpy
 pyserial
