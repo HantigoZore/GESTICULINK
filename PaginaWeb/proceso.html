@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GesticuLink — Línea del Tiempo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shorthandcss@1.1.1/dist/shorthand.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:200,300,400,500,600,700,800,900&display=swap" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+  <style>
+    body.muli { font-family: 'Muli', sans-serif; }
+    .timeline { max-width: 1100px; margin: 0 auto; padding: 4rem 1rem; }
+    .timeline-header { text-align: center; margin-bottom: 2rem; }
+    .timeline-line { position: relative; }
+    .timeline-line::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: rgba(52,184,148,0.12); /* línea central verde */
+      border-radius: 2px;
+    }
+    .event { position: relative; display: flex; align-items: center; gap: 2rem; padding: 2rem 0; }
+    .event:nth-child(odd) { justify-content: flex-start; }
+    .event:nth-child(even) { justify-content: flex-end; flex-direction: row-reverse; }
+    .event .media { width: 40%; max-width: 320px; }
+    .event .media img { width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .event .content { width: 55%; }
+    .event .bubble { background: rgba(255,255,255,0.04); padding: 1.25rem; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+    
+    /* Texto legible sobre fondo negro */
+    .event .date { font-weight:700; color: #34b894; margin-bottom: 0.5rem; }
+    .event .bubble p { color: #ffffff; opacity: 0.8; }
+
+    .event-marker {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 18px;
+      background: #34b894;
+      border-radius: 50%;
+      box-shadow: 0 6px 20px rgba(52,184,148,0.2);
+      z-index: 2;
+    }
+    /* position markers vertically along events */
+    .event[data-index="1"] .event-marker{ top: 6%; }
+    .event[data-index="2"] .event-marker{ top: 26%; }
+    .event[data-index="3"] .event-marker{ top: 46%; }
+    .event[data-index="4"] .event-marker{ top: 66%; }
+    .event[data-index="5"] .event-marker{ top: 86%; }
+
+    /* Texto en secciones */
+    #Inicio p { color: #ffffff; opacity: 0.8; }
+    nav .button { background: #34b894; color: #ffffff; }
+
+    /* Responsive: stack media over content on small screens and hide central line */
+    @media (max-width: 920px) {
+      .timeline-line::before { left: 4px; transform: none; }
+      .event { flex-direction: column; text-align: left; }
+      .event:nth-child(even) { flex-direction: column; }
+      .event .media, .event .content { width: 100%; }
+      .event-marker{ left: 4px; transform: none; }
+    }
+  </style>
+</head>
+
+<body class="bg-black muli">
+  <nav class="w-100pc flex flex-column md-flex-row md-px-10 py-5 bg-black">
+    <div class="flex justify-between">
+      <a href="#" class="flex items-center p-2 mr-4 no-underline">
+        <img src="./assets/images/LogoSinFondo.png" class="w-l10" alt="Logo" />
+      </a>
+      <a data-toggle="toggle-nav" data-target="#nav-items" href="#"
+        class="flex items-center ml-auto md-hidden opacity-50 hover-opacity-100 ease-300 p-1 m-3">
+        <i data-feather="menu"></i>
+      </a>
+      <div id="nav-items" class="hidden flex sm-w-100pc flex-column md-flex md-flex-row md-justify-end items-center">
+        <a href="./index.html" class="button fw-600 no-underline mx-5">Register</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="Inicio" class="p-10 md-py-0 vh-40 flex flex-col justify-center items-center text-center">
+    <div class="max-w-50pc pr-10">
+      <h1 class="white fs-l3 lh-sm fw-900">GESTICULINK — Línea del Tiempo</h1>
+      <p>Recorre los hitos principales de nuestro proyecto. Cada bloque tiene una imagen a la izquierda y texto descriptivo a la derecha —repetido 5 veces.</p>
+    </div>
+  </section>
+
+  <section id="timeline" class="timeline bg-black">
+    <div class="timeline-header">
+      <h2 class="white fs-l2 fw-900">Hitos del Proyecto</h2>
+    </div>
+
+    <div class="timeline-line relative p-5">
+      <!-- Repite 5 eventos -->
+      <div class="event" data-index="1">
+        <span class="event-marker" aria-hidden="true"></span>
+        <div class="media">
+          <img src="./assets/images/Proceso.png" alt="Paso 1" />
+        </div>
+        <div class="content">
+          <div class="bubble">
+            <div class="date">Enero 2024</div>
+            <h3 class="white fw-700 fs-m2">Inicio del Diseño</h3>
+            <p>Se definieron los requerimientos mecánicos y electrónicos para la cabeza robótica. Bocetos iniciales y prototipos rápidos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="event" data-index="2">
+        <span class="event-marker" aria-hidden="true"></span>
+        <div class="media">
+          <img src="./assets/images/timeline/step2.png" alt="Paso 2" />
+        </div>
+        <div class="content">
+          <div class="bubble">
+            <div class="date">Marzo 2024</div>
+            <h3 class="white fw-700 fs-m2">Electronica y Control</h3>
+            <p>Se integraron microcontroladores (ESP32), drivers de motor y sensores para control de posición y detección.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="event" data-index="3">
+        <span class="event-marker" aria-hidden="true"></span>
+        <div class="media">
+          <img src="./assets/images/timeline/step3.png" alt="Paso 3" />
+        </div>
+        <div class="content">
+          <div class="bubble">
+            <div class="date">Junio 2024</div>
+            <h3 class="white fw-700 fs-m2">Visión Artificial</h3>
+            <p>Se implementó reconocimiento de gestos y emociones mediante cámaras y modelos ligeros de IA.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="event" data-index="4">
+        <span class="event-marker" aria-hidden="true"></span>
+        <div class="media">
+          <img src="./assets/images/timeline/step4.png" alt="Paso 4" />
+        </div>
+        <div class="content">
+          <div class="bubble">
+            <div class="date">Agosto 2024</div>
+            <h3 class="white fw-700 fs-m2">Integración y Pruebas</h3>
+            <p>Se realizaron pruebas de movimiento, sincronización de expresiones y optimización del consumo energético.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="event" data-index="5">
+        <span class="event-marker" aria-hidden="true"></span>
+        <div class="media">
+          <img src="./assets/images/timeline/step5.png" alt="Paso 5" />
+        </div>
+        <div class="content">
+          <div class="bubble">
+            <div class="date">Septiembre 2024</div>
+            <h3 class="white fw-700 fs-m2">Lanzamiento</h3>
+            <p>Presentación pública del prototipo y apertura para pruebas de usuario. Recolección de feedback y planificación de la siguiente fase.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="p-5 md-p-l5 bg-black mt-10">
+    <div class="flex flex-wrap">
+      <div class="md-w-25pc mb-10">
+        <img src="assets/images/LogoSinFondo.png" class="w-l5" alt="" />
+        <div class="white opacity-70 fs-s2 mt-4 md-pr-10">
+          <p>¿Quieres cambiar textos, fechas o imágenes? Abre este archivo y edítalo cómodamente.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script>feather.replace();</script>
+</body>
+
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hook</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shorthandcss@1.1.1/dist/shorthand.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:200,300,400,500,600,700,800,900&display=swap" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+</head>
+
+<body class="bg-black muli">
+    <!-- Navigation -->
+    <nav class="w-100pc flex flex-column md-flex-row md-px-10 py-5 bg-black">
+        <div class="flex justify-between">
+            <a href="#" class="flex items-center p-2 mr-4 no-underline">
+                <img src="./assets/images/LogoSinFondo.png" class="w-l10" alt="Logo" />
+            </a>
+            <a data-toggle="toggle-nav" data-target="#nav-items" href="#"
+                class="flex items-center ml-auto md-hidden blue-lighter opacity-50 hover-opacity-100 ease-300 p-1 m-3">
+                <i data-feather="menu"></i>
+            </a>
+        </div>
+        <div id="nav-items" class="hidden flex sm-w-100pc flex-column md-flex md-flex-row md-justify-end items-center">
+            <a href="#Inicio" class="fs-s1 mx-3 py-3" style="color: #34b894; text-decoration: none;">Inicio</a>
+            <a href="#Descripción" class="fs-s1 mx-3 py-3" style="color: #34b894; text-decoration: none;">Descripción</a>
+            <a href="#Precio" class="fs-s1 mx-3 py-3" style="color: #34b894; text-decoration: none;">Precio</a>
+            <a href="#App" class="fs-s1 mx-3 py-3" style="color: #34b894; text-decoration: none;">App</a>
+            <a href="#" class="button bg-white black fw-600 no-underline mx-5">Register</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="Inicio" class="p-10 md-py-0 vh-100 flex flex-col justify-center items-center text-center">
+        <div class="max-w-50pc pr-10">
+            <h1 class="white fs-l3 lh-sm fw-900">GESTICULINK</h1>
+        </div>
+        <div class="max-w-50pc">
+             <img src="./assets/images/CabezaSinFondo.png" alt="Imagen CabezaSinFondo" class="w-100pc rounded-lg shadow-lg m-5">
+        </div>
+    </section>
+
+    <!-- Descripción -->
+    <section id="Descripción" class="p-10 md-p-l5">
+        <div class="flex flex-column md-flex-row mx-auto">
+
+            <!-- Movimiento Mecánico -->
+            <div class="w-100pc md-w-40pc">
+                <div class="br-8 p-5 m-5">
+                    <div class="flex justify-center items-center white w-l5 h-l5 br-round mb-5" style="background-color: rgba(52, 184, 148, 0.1);">
+                        <i data-feather="settings" class="w-l5"></i>
+                    </div>
+                    <h4 class="white fw-600 fs-m3 mb-5">Movimiento Mecánico</h4>
+                    <div class="fw-600 fs-m1 lh-3 opacity-50" style="color: #34b894;">
+                        La estructura de la cabeza robótica permite giros, inclinaciones y expresiones básicas gracias a motores de precisión, logrando movimientos realistas y fluidos.
+                    </div>
+                    <a href="#"
+                        class="mt-5 button fs-s3 white no-underline hover-opacity-100 hover-scale-up-1 ease-300" style="background-color: rgba(52, 184, 148, 0.1);">Leer más</a>
+                </div>
+            </div>
+
+            <!-- Procesamiento Inteligente -->
+            <div class="w-100pc md-w-40pc">
+                <div class="br-8 p-5 m-5">
+                    <div class="flex justify-center items-center white w-l5 h-l5 br-round mb-5" style="background-color: rgba(52, 184, 148, 0.1);">
+                        <i data-feather="cpu" class="w-l5"></i>
+                    </div>
+                    <h4 class="white fw-600 fs-m3 mb-5">Procesamiento Inteligente</h4>
+                    <div class="fw-600 fs-m1 opacity-50" style="color: #34b894;">
+                        Integra microcontroladores y algoritmos de inteligencia artificial que permiten reconocer el entorno, procesar información y reaccionar en tiempo real.
+                    </div>
+                    <a href="#"
+                        class="mt-5 button fs-s3 white no-underline hover-opacity-100 hover-scale-up-1 ease-300" style="background-color: rgba(52, 184, 148, 0.1);">Leer más</a>
+                </div>
+            </div>
+
+            <!-- Comunicación e Interacción -->
+            <div class="w-100pc md-w-40pc">
+                <div class="br-8 p-5 m-5">
+                    <div class="flex justify-center items-center white w-l5 h-l5 br-round mb-5" style="background-color: rgba(52, 184, 148, 0.1);">
+                        <i data-feather="message-circle" class="w-l5"></i>
+                    </div>
+                    <h4 class="white fw-600 fs-m3 mb-5">Comunicación e Interacción</h4>
+                    <div class="fw-600 fs-m1 opacity-50" style="color: #34b894;">
+                        La cabeza robótica puede interactuar mediante voz, gestos y expresiones, creando una experiencia cercana entre el usuario y la tecnología.
+                    </div>
+                    <a href="#"
+                        class="mt-5 button fs-s3 white no-underline hover-opacity-100 hover-scale-up-1 ease-300" style="background-color: rgba(52, 184, 148, 0.1);">Leer más</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Big Text -->
+    <section class="p-10 md-py-10">
+        <div class="w-100pc md-w-70pc mx-auto py-10 text-center">
+            <h2 class="white fs-l2 md-fs-xl1 fw-900 lh-2">
+                Imagina un futuro donde la tecnología piensa, siente y se mueve como
+                <span style="border-bottom: 4px solid #34b894;">nosotros.</span>
+            </h2>
+        </div>
+    </section>
+
+    <!-- APP y PROCESO -->
+    <section id="App" class="py-l10">
+      <div class="flex flex-column md-flex-row md-w-80pc mx-auto">
+
+        <!-- Proceso -->
+        <div class="w-100pc md-w-50pc">
+          <div class="br-8 p-5 m-5 pointer hover-scale-up-1 ease-300 text-center" style="background-color: #34b894;">
+            <div class="inline-block br-3 px-4 py-1 mb-10 fs-s2 uppercase white">
+              Proceso de la elaboración del proyecto
+            </div>
+            <div class="fw-800 fs-m3 white">
+              Oprime acá<span class="opacity-40"> para observar el proceso de la creación de HerlIA</span>
+            </div>
+            <img src="./assets/images/PARTES.png" alt="Imagen PARTES" class="w-30pc rounded-lg shadow-lg m-5 mx-auto">
+            <a href="./proceso.html" class="button bg-black fs-s3 white no-underline" style="display:block; margin:0 auto;">PROCESO</a>
+          </div>
+        </div>
+
+        <!-- App -->
+        <div class="w-100pc md-w-50pc">
+          <div class="br-8 p-5 m-5 pointer hover-scale-up-1 ease-300 text-center" style="background-color: #34b894;">
+            <div class="inline-block br-3 px-4 py-1 mb-10 fs-s2 uppercase white">
+              Probar la aplicación
+            </div>
+            <div class="fw-600 fs-m3 white">
+              Oprime acá<span class="opacity-40"> para acceder a la aplicación que controla a HerlIA y pruebes sus 4 emociones diferentes!</span>
+            </div>
+            <img src="./assets/images/Emociones.png" alt="Imagen Emociones" class="w-30pc rounded-lg shadow-lg m-5 mx-auto">
+            <a href="#" class="button bg-black fs-s3 white no-underline" style="display:block; margin:0 auto;">APP</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Precio -->
+    <section id="Precio">
+        <div class="p-10 flex flex-wrap">
+            <div class="w-100pc md-w-50pc">
+                <div class="p-5">
+                    <h4 class="white fw-800 fs-l3 mb-5">Precio Increíble!</h4>
+                    <div class="blue-lightest fw-600 fs-m1 opacity-50">Con toda la tecnología de movimiento realista, procesamiento
+                         inteligente e interacción avanzada, ahora puedes llevar este proyecto innovador a tus manos por un precio accesible.</div>
+                    <h4 class="white fw-600 fs-m2 mt-10">Aliados Estratégicos</h4>
+                    <div class="flex blue-lightest opacity-50">
+                           <div class="w-25pc">
+                             <img src="./assets/images/Aliados/Sigma.png" alt="Logo Sigma" class="w-100" />
+                         </div>
+                         <div class="w-25pc">
+                             <img src="./assets/images/Aliados/7ea6a198-65b9-4d32-ba82-d93dc2058a77-removebg-preview.png" alt="Logo Sigma" class="w-100" />
+                         </div>
+                         <div class="w-25pc">
+                             <img src="./assets/images/Aliados/tornillos7777777.png" alt="Logo Sigma" class="w-100" />
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100pc md-w-25pc">
+                <div class="m-3 p-5 br-8 bg-blue-lightest-10 overflow-hidden">
+                    <div class="p-3">
+                        <h3 style="color: #34b894;">Free</h3>
+                        <div class="white flex items-center">$<span class="fs-l5 lh-1">0</span>/mo</div>
+                    </div>
+                    <div class="p-3 fw-400 fs-s1 lh-5" style="color: #34b894;">
+                        <div>
+                            <i class="h-3" style="color: #34b894;" stroke-width="4" data-feather="check"></i>
+                            <span class="opacity-50">1 user</span>
+                        </div>
+                        <div>
+                            <i class="h-3 blue" stroke-width="4" data-feather="check"></i>
+                            <span class="opacity-50">100 visitors/month</span></div>
+                        <div>
+                            <i class="h-3 blue" stroke-width="4" data-feather="check"></i>
+                            <span class="opacity-50">1 website</span></div>
+                        <div>
+                            <i class="h-3 blue" stroke-width="4" data-feather="check"></i>
+                            <span class="opacity-50">24x7 support</span></div>
+                        <div>
+                            <i class="h-3" stroke-width="4" data-feather="x"></i>
+                            <span class="opacity-50">third party integration</span></div>
+                    </div>
+                    <div class="p-3">
+                        <button class="button full bg-black white  hover-opacity-100 hover-scale-up-1 ease-300">Get Started</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipo -->
+    <section class="p-10 md-p-l5">
+       <h1 class="white fs-l3 lh-sm fw-900 text-center mb-10">EQUIPO DE TRABAJO</h1>
+        <div id="slider-2">
+            <div class="px-3">
+                <div class="p-8 br-8 bg-blue-lightest-10 relative">
+                    <span class="fs-l5 lh-1 white opacity-10 absolute top-0 z--1">&#10077;</span>
+                    <p class="fw-600 fs-m1 blue-lightest opacity-80 italic ls-wider">Lo que más me motiva es ver cómo un software que parecía abstracto 
+                        se materializa en un robot capaz de reconocer y reaccionar.</p>
+                    <div class="flex items-center my-5">
+                        <div class="block br-round border bc-black bw-4 w-l3 h-l3"><img class="br-round"
+                                src="./assets/images/Integrantes/Herly.jpg" alt=""></div>
+                        <div class="ml-4 fs-s1">
+                            <div class="blue-lightest">Herly Santiago Suarez</div>
+                            <div class="blue-lightest opacity-20">Encargado de programación y visión artificial</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-3">
+                <div class="p-8 br-8 bg-blue-lightest-10 relative">
+                    <span class="fs-l5 lh-1 white opacity-10 absolute top-0 z--1">&#10077;</span>
+                    <p class="fw-600 fs-m1 blue-lightest opacity-80 italic ls-wider">Trabajar en este proyecto me permitió aplicar mis conocimientos 
+                        en control y aprender nuevas formas de integrar electrónica con mecánica. </p>
+                    <div class="flex items-center my-5">
+                        <div class="block br-round border bc-black bw-4 w-l3 h-l3"><img class="br-round"
+                                src="./assets/images/Integrantes/Camila.jpg" alt=""></div>
+                        <div class="ml-4 fs-s1">
+                            <div class="blue-lightest">Maria Camila Prieto</div>
+                            <div class="blue-lightest opacity-20">Encargada de la parte eléctrica y de control</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-3">
+                <div class="p-8 br-8 bg-blue-lightest-10 relative">
+                    <span class="fs-l5 lh-1 white opacity-10 absolute top-0 z--1">&#10077;</span>
+                    <p class="fw-600 fs-m1 blue-lightest opacity-80 italic ls-wider">La experiencia ha sido muy enriquecedora, especialmente al enfrentar 
+                        y superar los retos del diseño eléctrico. </p>
+                    <div class="flex items-center my-5">
+                        <div class="block br-round border bc-black bw-4 w-l3 h-l3"><img class="br-round"
+                                src="./assets/images/Integrantes/Andrés.jpg" alt=""></div>
+                        <div class="ml-4 fs-s1">
+                            <div class="blue-lightest">Andrés Felipe Caro</div>
+                            <div class="blue-lightest opacity-20">Encargado de la parte eléctrica y de control</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-3">
+                <div class="p-8 br-8 bg-blue-lightest-10 relative">
+                    <span class="fs-l5 lh-1 white opacity-10 absolute top-0 z--1">&#10077;</span>
+                    <p class="fw-600 fs-m1 blue-lightest opacity-80 italic ls-wider">Este proyecto me mostró el valor del trabajo en equipo y 
+                        cómo cada detalle mecánico influye en el realismo del robot.</p>
+                    <div class="flex items-center my-5">
+                        <div class="block br-round border bc-black bw-4 w-l3 h-l3"><img class="br-round"
+                                src="./assets/images/Integrantes/Samir.jpg" alt=""></div>
+                        <div class="ml-4 fs-s1">
+                            <div class="blue-lightest">Samir Esteban Jiménez</div>
+                            <div class="blue-lightest opacity-20">Encargado de la parte mecánica y ensamblaje</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="px-3">
+                <div class="p-8 br-8 bg-blue-lightest-10 relative">
+                    <span class="fs-l5 lh-1 white opacity-10 absolute top-0 z--1">&#10077;</span>
+                    <p class="fw-600 fs-m1 blue-lightest opacity-80 italic ls-wider">Este proyecto demuestra cómo la unión de diferentes disciplinas puede
+                         dar vida a una idea innovadora. Ha sido un reto apasionante coordinarlo.</p>
+                    <div class="flex items-center my-5">
+                        <div class="block br-round border bc-black bw-4 w-l3 h-l3"><img class="br-round"
+                                src="./assets/images/Integrantes/Guevara.jpg" alt=""></div>
+                        <div class="ml-4 fs-s1">
+                            <div class="blue-lightest">Juan Felipe Guevara</div>
+                            <div class="blue-lightest opacity-20">Líder del Proyecto y Coordinación General</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="px-3">
+                <div class="p-8 br-8 bg-blue-lightest-10 relative">
+                    <span class="fs-l5 lh-1 white opacity-10 absolute top-0 z--1">&#10077;</span>
+                    <p class="fw-600 fs-m1 blue-lightest opacity-80 italic ls-wider">Me emociona ver cómo la mecánica cobra vida cuando se combina 
+                        con la electrónica y el software. El resultado es increíble. </p>
+                    <div class="flex items-center my-5">
+                        <div class="block br-round border bc-black bw-4 w-l3 h-l3"><img class="br-round"
+                                src="./assets/images/Integrantes/Steven.png" alt=""></div>
+                        <div class="ml-4 fs-s1">
+                            <div class="blue-lightest">Hernán Steven González</div>
+                            <div class="blue-lightest opacity-20">Encargado de la parte mecánica y ensamblaje</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+<!-- footer -->
+<footer class="p-5 md-p-l5 bg-blue-lightest-10">
+    <div class="flex flex-wrap">
+        <div class="md-w-25pc mb-10">
+            <img src="assets/images/LogoSinFondo.png" class="w-l5" alt="">
+            <div class="white opacity-70 fs-s2 mt-4 md-pr-10">
+                <p>Soluta voluptate et optio. Eos quasi impedit sapiente aliquid eius eligendi at. Necessitatibus
+                    magni et sed quod quas minima.</p>
+                <br>
+                <p>Soluta voluptate et optio. Eos quasi impedit sapiente aliquid eius eligendi at. Necessitatibus
+                    magni et sed quod quas minima.</p>
+            </div>
+        </div>
+        <div class="w-100pc md-w-50pc">
+            <div class="flex justify-around">
+                <div class="w-33pc md-px-10 mb-10">
+                    <h5 class="white">Company</h5>
+                    <ul class="list-none mt-5 fs-s2">
+                        <li class="my-3"><a href="#" class="white opacity-70 no-underline hover-underline">About
+                                Us</a></li>
+                        <li class="my-3"><a href="#" class="white opacity-70 no-underline hover-underline">Jobs</a>
+                        </li>
+                        <li class="my-3"><a href="#"
+                                class="white opacity-70 no-underline hover-underline">Contact</a></li>
+                        <li class="my-3"><a href="#" class="white opacity-70 no-underline hover-underline">Media</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="w-100pc md-w-25pc">
+            <div class="flex w-75pc md-w-100pc mx-auto">
+                <input type="text"
+                    class="input flex-grow-1 bw-0 fw-200 bg-blue-lightest-10 white ph-blue-lightest focus-white opacity-80 fs-s3 py-5 br-r-0"
+                    placeholder="Email Address">
+                <button class="button" style="background-color: #34b894; color: white;">Start</button>
+            </div>
+            <div class="flex justify-around my-8">
+                <a href="#" class="relative p-5 br-round" style="background-color: #34b894; color: white;"><i
+                        data-feather="twitter" class="absolute-center h-4"></i></a>
+                <a href="#" class="relative p-5 br-round" style="background-color: #34b894; color: white;"><i
+                        data-feather="facebook" class="absolute-center h-4"></i></a>
+                <a href="#" class="relative p-5 br-round" style="background-color: #34b894; color: white;"><i
+                        data-feather="instagram" class="absolute-center h-4"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script>feather.replace()</script>
+</body>
+</html>
