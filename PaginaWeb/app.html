@@ -2,13 +2,55 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Prueba Cámara Continua a Flask</title>
+    <title>HerlIA - Control de Emociones</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: 'Muli', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+        }
+
+        .camera-container {
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        #video {
+            width: 800px;
+            height: 600px;
+            border: 3px solid #34b894;
+            border-radius: 10px;
+        }
+
+        .emotion-display {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #34b894;
+        }
+    </style>
 </head>
 <body>
-    <h2>Envío continuo de la cámara al Flask</h2>
-    <video id="video" autoplay playsinline width="640" height="480"></video>
-
-    <h3>Emoción detectada: <span id="emocion">Ninguna</span></h3>
+    <img src="./assets/images/LogoSinFondo.png" alt="Logo" class="logo">
+    
+    <div class="camera-container">
+        <video id="video" autoplay playsinline></video>
+        <div class="emotion-display">
+            Emoción detectada: <span id="emocion">Ninguna</span>
+        </div>
+    </div>
 
     <script>
         const video = document.getElementById('video');
@@ -26,8 +68,8 @@
 
         // Crear canvas para capturar imagen
         const canvas = document.createElement('canvas');
-        canvas.width = 640;
-        canvas.height = 480;
+        canvas.width = 800;
+        canvas.height = 600;
         const ctx = canvas.getContext('2d');
 
         // Enviar frame cada 1 segundo
@@ -44,13 +86,13 @@
             .then(response => response.json())
             .then(data => {
                 console.log("Emoción detectada:", data.emocion);
-                emocionSpan.textContent = data.emocion; // Mostrar en la página
+                emocionSpan.textContent = data.emocion;
             })
             .catch(err => {
                 console.error("Error enviando la imagen:", err);
                 emocionSpan.textContent = "Error";
             });
-        }, 1000); // cada 1 segundo
+        }, 1000);
     </script>
 </body>
 </html>
