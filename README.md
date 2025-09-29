@@ -30,7 +30,7 @@ Puedes clonar este repositorio y vincularlo a **Visual Studio Code** para un ent
 También puedes aprovechar herramientas como **GitHub Copilot** o **ChatGPT** para optimizar el flujo de trabajo y colaborar mediante **Pull Requests**.
 
 ```bash
-git clone https://github.com/usuario/gesticulink.git
+git clone https://github.com/estherlysuarez-ui/GESTICULINK.git
 ````
 
 ---
@@ -54,5 +54,3 @@ Las contribuciones son bienvenidas. Puedes abrir un **issue** para reportar prob
 
 Este proyecto se distribuye bajo la licencia **MIT**.
 Consulta el archivo [LICENSE](LICENSE) para más detalles.
-
-```
