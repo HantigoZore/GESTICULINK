@@ -1,12 +1,25 @@
-# Codigos Reconocimiento Facial
+# 🤖 Códigos de Reconocimiento Facial
 
-Aqui esta el codigo Reconocimiento.py el cual es el encargado de correr el servidor de python en el PC Local y para que funcione correctamente hay que correrlo antes de abrir la pagina ademas que el dispositivo en que se abre la pagina y 
-el PC Local deben estar en la misma red.
+Este repositorio contiene el archivo Reconocimiento.py, encargado de levantar el servidor en Python en el PC local.
+Es importante recordar que:
 
-## Instalar librerias.
+**-El servidor debe estar corriendo antes de abrir la página web.**
 
-Para instalar las librerias necesarias para el codigo solo se necesita en la terminal/bash correr el comando. 
+**-El dispositivo donde se abre la página y el PC local que corre el servidor deben estar conectados a la misma red.**
+
+## 📦 Instalación de librerías
+
+Para instalar todas las dependencias necesarias, ejecuta en la terminal o bash el siguiente comando dentro de la carpeta del proyecto:
 ```bash
-pip install librerias.txt
+pip install -r librerias.txt
 ```
-Con eso ya las librerias estan instaladas y se puede ejecutar el codigo.
+
+Con esto, todas las librerías quedarán instaladas y podrás ejecutar el código sin problemas. ✅
+
+## 🚀 Ejecución del servidor
+
+Una vez instaladas las dependencias, inicia el servidor ejecutando:
+```bash
+python Reconocimiento.py
+```
+El servidor quedará activo y listo para recibir las peticiones desde la página web.
