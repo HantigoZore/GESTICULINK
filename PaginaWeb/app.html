@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>HerlIA - Control de Emociones</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: 'Muli', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+        }
+
+        .camera-container {
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        #video {
+            width: 800px;
+            height: 600px;
+            border: 3px solid #34b894;
+            border-radius: 10px;
+        }
+
+        .emotion-display {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #34b894;
+        }
+    </style>
+</head>
+<body>
+    <a href="home.html">
+        <img src="./assets/images/LogoSinFondo.png" alt="Logo" class="logo">
+    </a>
+    
+    <div id="lock-msg" style="color:red; margin-top:30px; font-size:22px; display:none;">
+        Solo un usuario puede usar el reconocimiento facial a la vez. Intenta más tarde.
+    </div>
+    <div class="camera-container">
+        <video id="video" autoplay playsinline></video>
+        <div class="emotion-display">
+            Emoción detectada: <span id="emocion">Ninguna</span>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const emocionSpan = document.getElementById('emocion');
+        const cameraContainer = document.querySelector('.camera-container');
+        const lockMsg = document.getElementById('lock-msg');
+        let intervalId = null;
+
+        async function acquireLock() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/lock', {method: 'POST'});
+                const data = await res.json();
+                return data.status === "ok";
+            } catch (e) {
+                return false;
+            }
+        }
+        async function releaseLock() {
+            try {
+                await fetch('http://127.0.0.1:5000/unlock', {method: 'POST'});
+            } catch (e) {}
+        }
+
+        async function startApp() {
+            const granted = await acquireLock();
+            if (!granted) {
+                lockMsg.style.display = 'block';
+                cameraContainer.style.display = 'none';
+                return;
+            }
+            cameraContainer.style.display = '';
+            lockMsg.style.display = 'none';
+
+            // Abrir la cámara del computador
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(err => {
+                    console.error("Error al acceder a la cámara:", err);
+                    alert("No se pudo acceder a la cámara");
+                });
+
+            // Crear canvas para capturar imagen
+            const canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
+
+            // Enviar frame cada 1 segundo
+            intervalId = setInterval(() => {
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const dataURL = canvas.toDataURL('image/jpeg', 0.7);
+                const base64Image = dataURL.split(',')[1];
+
+                fetch('http://127.0.0.1:5000/emocion', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: base64Image })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Emoción detectada:", data.emocion);
+                    emocionSpan.textContent = data.emocion;
+                })
+                .catch(err => {
+                    console.error("Error enviando la imagen:", err);
+                    emocionSpan.textContent = "Error";
+                });
+            }, 1000);
+
+            window.addEventListener('beforeunload', async () => {
+                clearInterval(intervalId);
+                await releaseLock();
+            });
+        }
+
+        startApp();
+    </script>
+</body>
+</html>

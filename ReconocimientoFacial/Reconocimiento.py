@@ -8,6 +8,24 @@ import base64
 app = Flask(__name__)
 CORS(app)  # habilita CORS para recibir peticiones desde cualquier origen
 
+# --- Lock global para acceso exclusivo ---
+locked = False
+
+@app.route('/lock', methods=['POST'])
+def acquire_lock():
+    global locked
+    if not locked:
+        locked = True
+        return jsonify({"status": "ok"})
+    else:
+        return jsonify({"status": "locked"})
+
+@app.route('/unlock', methods=['POST'])
+def release_lock():
+    global locked
+    locked = False
+    return jsonify({"status": "unlocked"})
+
 emociones_permitidas = ["angry", "sad", "happy", "surprise"]
 porcentaje_minimo = 10
 
