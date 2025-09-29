@@ -20,7 +20,7 @@ El repositorio está organizado en tres carpetas principales:
 - Integración de hardware (microcontrolador) con software de reconocimiento facial.  
 - Comunicación en tiempo real entre los módulos.  
 - Interfaz web para visualización y control.  
-- Primera versión con integración básica de la página web y el reconocimiento facial.  
+- Primera versión con integración de la página web y el reconocimiento facial.  
 
 ---
 
@@ -40,7 +40,7 @@ git clone https://github.com/estherlysuarez-ui/GESTICULINK.git
 Esta rama incluye la **primera versión** con:
 
 * Incorporación de la página web.
-* Integración inicial del sistema de reconocimiento facial.
+* Integración del sistema de reconocimiento facial.
 
 ---
 
