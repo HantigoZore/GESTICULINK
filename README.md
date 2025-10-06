@@ -58,3 +58,7 @@ Las contribuciones son bienvenidas. Puedes abrir un **issue** para reportar prob
 
 Este proyecto se distribuye bajo la licencia **MIT**.
 Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+## 🌐 English
+
+Si prefieres leer en inglés, revisa la versión en inglés: [README.en.md](README.en.md)
