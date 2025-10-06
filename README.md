@@ -1,4 +1,8 @@
-# 🤖 GESTICULINK
+<p align="center">
+  <img src="PaginaWeb/assets/images/LogoSinFondo.png" alt="GESTICULINK Logo" width="200"/>
+</p>
+
+# GESTICULINK
 
 **Cabeza Animatrónica GESTICULINK**  
 Repositorio oficial del proyecto GESTICULINK, un sistema capaz de imitar gestos humanos en tiempo real mediante el uso de microcontroladores, reconocimiento facial y una interfaz web.
