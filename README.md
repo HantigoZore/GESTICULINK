@@ -13,9 +13,9 @@ Repositorio oficial del proyecto GESTICULINK, un sistema capaz de imitar gestos 
 
 El repositorio está organizado en tres carpetas principales:
 
-- **`/Microcontrolador/`** → Contiene los códigos para el control del hardware y la animatrónica.  
-- **`/ReconocimientoFacial/`** → Implementación del sistema de visión por computadora para detectar gestos y expresiones faciales.  
-- **`/PaginaWeb/`** → Código de la interfaz web para monitoreo y control del sistema.  
+- [Microcontrolador](/Microcontrolador) → Contiene los códigos para el control del hardware y la animatrónica.  
+- [ReconocimientoFacial](/ReconocimientoFacial)  → Implementación del sistema de visión por computadora para detectar gestos y expresiones faciales.  
+- [PaginaWeb](/PaginaWeb)  → Código de la interfaz web para monitoreo y control del sistema.  
 
 ---
 
