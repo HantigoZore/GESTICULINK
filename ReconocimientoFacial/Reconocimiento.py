@@ -4,9 +4,14 @@ import cv2
 from deepface import DeepFace
 import numpy as np
 import base64
+import serial
+import time
 
+# --- Configuración del servidor Flask ---
 app = Flask(__name__)
-CORS(app)  # habilita CORS para recibir peticiones desde cualquier origen
+CORS(app)
+ser = serial.Serial('COM3', 115200, timeout=1)
+time.sleep(2)  
 
 # --- Lock global para acceso exclusivo ---
 locked = False
@@ -53,24 +58,31 @@ def emocion():
 
     # Decodifica la imagen base64
     if ',' in img_data:
-        img_data = img_data.split(",")[1]  # elimina prefijo data:image/png;base64, si existe
+        img_data = img_data.split(",")[1]
 
     try:
         img_bytes = base64.b64decode(img_data)
         np_arr = np.frombuffer(img_bytes, np.uint8)
         frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
-        # Detecta la emoción
         emocion_detectada = detectar_emocion(frame)
 
-        # Imprime en consola para verificación
-        print(f"Emoción recibida del HTML: {emocion_detectada}")
-        
-        # Devuelve la emoción al cliente
+        print(f"Emoción detectada: {emocion_detectada}")
+
+        # --- Enviar emoción a la ESP32 por serial ---
+        try:
+            if ser.is_open:
+                ser.write((emocion_detectada + '\n').encode('utf-8'))
+                print(f"Enviando a ESP32: {emocion_detectada}")
+            else:
+                print("Error: Puerto serial no está abierto.")
+        except Exception as e:
+            print(f"Error enviando por serial: {e}")
+
         return jsonify({'emocion': emocion_detectada})
     except Exception as e:
         print(f"Error procesando imagen: {e}")
         return jsonify({'error': 'no se pudo procesar la imagen'}), 400
 
 if __name__ == '__main__':
-        app.run(host='127.0.0.1', port=5000, debug=True,)
+    app.run(host='127.0.0.1', port=5000, debug=True)
