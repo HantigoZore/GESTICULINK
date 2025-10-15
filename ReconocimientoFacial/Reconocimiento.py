@@ -6,15 +6,30 @@ import numpy as np
 import base64
 import serial
 import time
+import threading
 
-# --- Configuración del servidor Flask ---
 app = Flask(__name__)
 CORS(app)
-ser = serial.Serial('COM3', 115200, timeout=1)
-time.sleep(2)  
 
 # --- Lock global para acceso exclusivo ---
 locked = False
+serial_lock = threading.Lock()  # Lock para acceso al puerto serial
+
+# --- Configuración del puerto ---
+PUERTO_ESP32 = 'COM6'  # Cambia según tu sistema
+BAUD_RATE = 115200
+
+# --- Abrir el puerto globalmente al iniciar ---
+try:
+    ser = serial.Serial(PUERTO_ESP32, BAUD_RATE, timeout=1)
+    time.sleep(2)  # Espera a que la ESP32 inicialice el puerto
+    print(f"✅ Puerto {PUERTO_ESP32} abierto para toda la sesión")
+except Exception as e:
+    ser = None
+    print(f"⚠️ No se pudo abrir {PUERTO_ESP32}: {e}")
+
+emociones_permitidas = ["angry", "sad", "happy", "surprise"]
+porcentaje_minimo = 10
 
 @app.route('/lock', methods=['POST'])
 def acquire_lock():
@@ -30,9 +45,6 @@ def release_lock():
     global locked
     locked = False
     return jsonify({"status": "unlocked"})
-
-emociones_permitidas = ["angry", "sad", "happy", "surprise"]
-porcentaje_minimo = 10
 
 def detectar_emocion(frame):
     try:
@@ -50,13 +62,24 @@ def detectar_emocion(frame):
         print(f"Error detectando emoción: {e}")
         return "error"
 
+def enviar_a_esp32(emocion):
+    global ser
+    if ser is not None:
+        with serial_lock:
+            try:
+                ser.write((emocion + "\n").encode('utf-8'))
+                print(f"✅ Enviado a ESP32: {emocion}")
+            except Exception as e:
+                print(f"⚠️ Error enviando a la ESP32: {e}")
+    else:
+        print("❌ Puerto no disponible")
+
 @app.route('/emocion', methods=['POST'])
 def emocion():
     print("Petición recibida")
     data = request.json
     img_data = data['image']
 
-    # Decodifica la imagen base64
     if ',' in img_data:
         img_data = img_data.split(",")[1]
 
@@ -66,18 +89,12 @@ def emocion():
         frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
         emocion_detectada = detectar_emocion(frame)
-
         print(f"Emoción detectada: {emocion_detectada}")
 
-        # --- Enviar emoción a la ESP32 por serial ---
-        try:
-            if ser.is_open:
-                ser.write((emocion_detectada + '\n').encode('utf-8'))
-                print(f"Enviando a ESP32: {emocion_detectada}")
-            else:
-                print("Error: Puerto serial no está abierto.")
-        except Exception as e:
-            print(f"Error enviando por serial: {e}")
+        if emocion_detectada in emociones_permitidas:
+            enviar_a_esp32(emocion_detectada)
+        else:
+            enviar_a_esp32("neutral")
 
         return jsonify({'emocion': emocion_detectada})
     except Exception as e:
@@ -85,4 +102,5 @@ def emocion():
         return jsonify({'error': 'no se pudo procesar la imagen'}), 400
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    # debug=False evita reinicios automáticos que abren el puerto varias veces
+    app.run(host='127.0.0.1', port=5000, debug=False)
