@@ -60,18 +60,21 @@ void feliz() {
 
 void triste() {
   Serial.println("Ejecutando emoción: triste");
-  // Aquí defines los movimientos de servos para "sad"
+  // Define tus movimientos de servos aquí
 }
 
 void enojado() {
   Serial.println("Ejecutando emoción: enojado");
-  // Aquí defines los movimientos para "angry"
+  // Define tus movimientos de servos aquí
 }
 
 void sorprendido() {
   Serial.println("Ejecutando emoción: sorprendido");
-  // Aquí defines los movimientos para "surprise"
+  // Define tus movimientos de servos aquí
 }
+
+// ----- VARIABLES GLOBALES -----
+String ultimaEmocion = "";  // Guarda la última emoción ejecutada
 
 // ----- LOOP PRINCIPAL -----
 void loop() {
@@ -79,10 +82,17 @@ void loop() {
     String emocion = Serial.readStringUntil('\n');
     emocion.trim();
 
-    if (emocion == "happy") feliz();
-    else if (emocion == "sad") triste();
-    else if (emocion == "angry") enojado();
-    else if (emocion == "surprise") sorprendido();
-    else Serial.println("Emoción desconocida recibida: " + emocion);
+    // Ejecuta la función solo si cambió la emoción
+    if (emocion != ultimaEmocion) {
+      Serial.println("Cambio de emoción detectado: " + emocion);
+      delay(3000); // Espera 3 segundos antes de ejecutar
+      if (emocion == "happy") feliz();
+      else if (emocion == "sad") triste();
+      else if (emocion == "angry") enojado();
+      else if (emocion == "surprise") sorprendido();
+      else Serial.println("Emoción desconocida recibida: " + emocion);
+
+      ultimaEmocion = emocion; // Actualiza la última emoción
+    }
   }
 }
