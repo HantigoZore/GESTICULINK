@@ -1,6 +1,10 @@
 flask
 flask-cors
 opencv-python
-deepface
 numpy
 pyserial
+deepface
+fer
+tensorflow
+keras
+mtcnn
