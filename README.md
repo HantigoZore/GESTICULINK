@@ -76,10 +76,16 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**Nota sobre dlib**: Si la instalación de `dlib` falla:
-- **Windows**: Descargar wheel precompilado desde [aquí](https://github.com/z-mahmud22/Dlib_Windows_Python3.x)
-- **Linux**: `sudo apt-get install build-essential cmake`
-- **Alternativa**: El sistema funciona con MediaPipe sin dlib
+**Nota sobre dependencias opcionales**:
+- **dlib**: Comentada en requirements.txt por defecto. El sistema usa MediaPipe como alternativa.
+  - Si deseas instalarla:
+    - **Windows**: Descargar wheel precompilado desde [aquí](https://github.com/z-mahmud22/Dlib_Windows_Python3.x)
+    - **Linux**: `sudo apt-get install build-essential cmake` luego `pip install dlib`
+    - **macOS**: `brew install cmake` luego `pip install dlib`
+- **PyAudio**: Puede requerir dependencias del sistema:
+  - **Windows**: `pip install pipwin && pipwin install pyaudio`
+  - **Linux**: `sudo apt-get install python3-pyaudio portaudio19-dev`
+  - **macOS**: `brew install portaudio` luego `pip install pyaudio`
 
 4. **Configurar variables de entorno** (opcional, para IA)
 

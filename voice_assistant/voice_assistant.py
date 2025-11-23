@@ -62,7 +62,11 @@ class VoiceAssistant:
             # Try to set a Spanish voice if available
             voices = self.tts_engine.getProperty('voices')
             for voice in voices:
-                if 'spanish' in voice.name.lower() or 'es' in voice.languages:
+                # Safely check for languages attribute
+                has_spanish = False
+                if hasattr(voice, 'languages') and voice.languages:
+                    has_spanish = 'es' in voice.languages
+                if 'spanish' in voice.name.lower() or has_spanish:
                     self.tts_engine.setProperty('voice', voice.id)
                     break
             

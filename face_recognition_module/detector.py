@@ -16,7 +16,7 @@ class FaceDetector:
     Robust face detector with multiple backends
     """
     
-    def __init__(self, method='dnn'):
+    def __init__(self, method='auto'):
         """
         Initialize face detector
         
