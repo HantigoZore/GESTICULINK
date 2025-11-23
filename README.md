@@ -7,6 +7,8 @@
 **Cabeza Animatrónica GESTICULINK**  
 Repositorio oficial del proyecto GESTICULINK, un sistema capaz de imitar gestos humanos en tiempo real mediante el uso de microcontroladores, reconocimiento facial y una interfaz web.
 
+> 🚀 **[Ver Guía de Inicio Rápido](QUICKSTART.md)** para empezar en minutos
+
 ---
 
 ## 📂 Estructura del Repositorio

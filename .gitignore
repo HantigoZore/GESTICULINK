@@ -9,6 +9,7 @@ __pycache__/
 *.pyd
 .Python
 .env
+.env.local
 .venv
 env/
 venv/
@@ -18,3 +19,5 @@ ENV/
 *.mp3
 *.wav
 captured_faces/
+dataset/
+*.caffemodel
