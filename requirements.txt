@@ -1,0 +1,35 @@
+# Core dependencies
+opencv-python>=4.8.0
+opencv-contrib-python>=4.8.0
+numpy>=1.24.0
+Pillow>=10.0.0
+imutils>=0.5.4
+
+# Facial recognition
+face-recognition>=1.3.0
+mediapipe>=0.10.0
+dlib>=19.24.0
+
+# Existing facial analysis (keep compatibility)
+flask>=2.3.0
+flask-cors>=4.0.0
+deepface>=0.0.79
+fer>=22.5.0
+tensorflow>=2.13.0
+keras>=2.13.0
+mtcnn>=0.1.1
+
+# Voice and audio
+SpeechRecognition>=3.10.0
+pyttsx3>=2.90
+gTTS>=2.3.2
+PyAudio>=0.2.13
+
+# AI Integration
+openai>=1.0.0
+
+# Serial communication (existing)
+pyserial>=3.5
+
+# Utilities
+python-dotenv>=1.0.0
