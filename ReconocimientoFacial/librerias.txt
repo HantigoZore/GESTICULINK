@@ -1,10 +1,25 @@
-flask
-flask-cors
-opencv-python
-numpy
-pyserial
-deepface
-fer
-tensorflow
-keras
-mtcnn
+# Flask
+flask==3.0.0
+flask-cors==4.0.0
+
+# Computer Vision
+opencv-python==4.10.0.84
+opencv-contrib-python==4.10.0.84
+
+# Reconocimiento Facial
+deepface==0.0.90
+fer==22.5.1
+mediapipe==0.10.14
+
+# Deep Learning
+tensorflow==2.16.1
+tf-keras==2.16.0
+
+# Utilidades
+numpy==1.26.4
+pyserial==3.5
+mtcnn==0.1.1
+retina-face==0.0.17
+
+# Opcional pero recomendado
+pillow==10.3.0

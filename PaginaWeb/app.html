@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>HerlIA - Control de Emociones</title>
@@ -42,11 +43,12 @@
         }
     </style>
 </head>
+
 <body>
     <a href="home.html">
         <img src="./assets/images/LogoSinFondo.png" alt="Logo" class="logo">
     </a>
-    
+
     <div id="lock-msg" style="color:red; margin-top:30px; font-size:22px; display:none;">
         Solo un usuario puede usar el reconocimiento facial a la vez. Intenta más tarde.
     </div>
@@ -66,7 +68,7 @@
 
         async function acquireLock() {
             try {
-                const res = await fetch('http://127.0.0.1:5000/lock', {method: 'POST'});
+                const res = await fetch('http://127.0.0.1:5000/lock', { method: 'POST' });
                 const data = await res.json();
                 return data.status === "ok";
             } catch (e) {
@@ -75,8 +77,8 @@
         }
         async function releaseLock() {
             try {
-                await fetch('http://127.0.0.1:5000/unlock', {method: 'POST'});
-            } catch (e) {}
+                await fetch('http://127.0.0.1:5000/unlock', { method: 'POST' });
+            } catch (e) { }
         }
 
         async function startApp() {
@@ -108,7 +110,7 @@
             // Enviar frame cada 1 segundo
             intervalId = setInterval(() => {
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const dataURL = canvas.toDataURL('image/jpeg', 0.7);
+                const dataURL = canvas.toDataURL('image/jpeg', 0.9);
                 const base64Image = dataURL.split(',')[1];
 
                 fetch('http://127.0.0.1:5000/emocion', {
@@ -116,15 +118,15 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ image: base64Image })
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Emoción detectada:", data.emocion);
-                    emocionSpan.textContent = data.emocion;
-                })
-                .catch(err => {
-                    console.error("Error enviando la imagen:", err);
-                    emocionSpan.textContent = "Error";
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Emoción detectada:", data.emocion);
+                        emocionSpan.textContent = data.emocion;
+                    })
+                    .catch(err => {
+                        console.error("Error enviando la imagen:", err);
+                        emocionSpan.textContent = "Error";
+                    });
             }, 1000);
 
             window.addEventListener('beforeunload', async () => {
@@ -136,4 +138,5 @@
         startApp();
     </script>
 </body>
+
 </html>
