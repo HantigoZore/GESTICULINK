@@ -11,6 +11,10 @@ deepface==0.0.90
 fer==22.5.1
 mediapipe==0.10.14
 
+# Reconocimiento Voz
+google-generativeai==0.8.3
+
+
 # Deep Learning
 tensorflow==2.16.1
 tf-keras==2.16.0
