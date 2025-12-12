@@ -11,10 +11,11 @@ Official repository of the **GESTICULINK** project, a system capable of **mimick
 
 ## 📂 Repository Structure
 
-The repository is organized into three main folders:
+The repository is organized into four main folders:
 
 - **`/Microcontrolador/`** → Contains code for hardware control and the animatronic system.  
 - **`/ReconocimientoFacial/`** → Implementation of the computer vision system to detect facial gestures and expressions.  
+- **`/ReconocimientoVoz/`** → Voice conversation system with integrated AI (Gemini 2.5 Flash) for voice interaction.
 - **`/PaginaWeb/`** → Code for the web interface to monitor and control the system.  
 
 ---
@@ -22,9 +23,11 @@ The repository is organized into three main folders:
 ## 🚀 Features
 
 - Integration of hardware (microcontroller) with facial recognition software.  
+- Voice recognition system with integrated AI (Gemini 2.5 Flash) for natural conversation.  
 - Real-time communication between modules.  
-- Web interface for monitoring and control.  
-- Initial version with integration of the web interface and facial recognition system.  
+- Enhanced web interface for monitoring, control, and voice interaction.  
+- Improvements in emotion and facial gesture detection.  
+- System that enables both automatic control (by gestures) and conversational interaction.  
 
 ---
 
@@ -39,11 +42,13 @@ git clone https://github.com/estherlysuarez-ui/GESTICULINK.gi
 
 ## 📌 Branch Status
 
-This branch includes the first version with:
+This branch includes significant improvements:
 
--Web interface implementation.
-
--Integration of the facial recognition system.
+- Enhanced web interface with new voice interaction mode.
+- Complete facial recognition system with emotion detection.
+- Integration of conversational AI using Gemini 2.5 Flash for natural interaction.
+- Improvements in facial recognition accuracy.
+- Updated animatronic head image.
 
 ## 🤝 Contributing
 
