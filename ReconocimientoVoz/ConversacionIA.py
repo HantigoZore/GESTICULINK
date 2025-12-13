@@ -6,7 +6,9 @@ Usando Gemini 2.5 Flash (Verificado funcionando)
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import google.generativeai as genai
+import os
 from datetime import datetime
+from pathlib import Path
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -18,8 +20,34 @@ CORS(app)
 # ============================================================================
 # CONFIGURACIÓN DE GEMINI
 # ============================================================================
-GEMINI_API_KEY = "AIzaSyDCyifK39Hd4aN0ygy91FtwmMK7aLEn3p4"  # Tu API key funcionando
-genai.configure(api_key=GEMINI_API_KEY)
+def load_gemini_api_key():
+    """Carga la API key desde env vars o un archivo .env local."""
+    env_key = os.getenv("GEMINI_API_KEY")
+    if env_key:
+        return env_key.strip()
+
+    env_path = Path(__file__).resolve().parent / ".env"
+    if env_path.exists():
+        try:
+            for line in env_path.read_text().splitlines():
+                if not line or line.strip().startswith("#") or "=" not in line:
+                    continue
+                name, value = line.split("=", 1)
+                if name.strip() == "GEMINI_API_KEY":
+                    return value.strip().strip('"').strip("'")
+        except Exception as e:
+            logger.warning(f"⚠️ No se pudo leer .env: {e}")
+
+    return "TU_API_KEY_AQUI"
+
+
+GEMINI_API_KEY = load_gemini_api_key()
+
+if GEMINI_API_KEY and GEMINI_API_KEY != "TU_API_KEY_AQUI":
+    genai.configure(api_key=GEMINI_API_KEY)
+    logger.info("🔑 API Key cargada correctamente (env/.env)")
+else:
+    logger.warning("⚠️ GEMINI_API_KEY no configurada. Define la variable de entorno o el archivo .env")
 
 # ✅ Modelo verificado funcionando
 MODEL = "gemini-2.5-flash"

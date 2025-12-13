@@ -62,11 +62,4 @@ Consult the file [LICENSE](LICENSE)
 ## 🌐 Español
 
 To read in Spanish, check the Spanish version: [README.md](README.md)
-
-
-
-
-
-
-
 See the LICENSE file for more details.
