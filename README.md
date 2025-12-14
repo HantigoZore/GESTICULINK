@@ -11,10 +11,11 @@ Repositorio oficial del proyecto GESTICULINK, un sistema capaz de imitar gestos 
 
 ## 📂 Estructura del Repositorio
 
-El repositorio está organizado en tres carpetas principales:
+El repositorio está organizado en cuatro carpetas principales:
 
 - [Microcontrolador](/Microcontrolador) → Contiene los códigos para el control del hardware y la animatrónica.  
 - [ReconocimientoFacial](/ReconocimientoFacial)  → Implementación del sistema de visión por computadora para detectar gestos y expresiones faciales.  
+- [ReconocimientoVoz](/ReconocimientoVoz)  → Sistema de conversación con IA integrada (Gemini 2.5 Flash) para interacción por voz.
 - [PaginaWeb](/PaginaWeb)  → Código de la interfaz web para monitoreo y control del sistema.  
 
 ---
@@ -22,9 +23,11 @@ El repositorio está organizado en tres carpetas principales:
 ## 🚀 Características
 
 - Integración de hardware (microcontrolador) con software de reconocimiento facial.  
+- Sistema de reconocimiento de voz con IA integrada (Gemini 2.5 Flash) para conversación natural.  
 - Comunicación en tiempo real entre los módulos.  
-- Interfaz web para visualización y control.  
-- Primera versión con integración de la página web y el reconocimiento facial.  
+- Interfaz web mejorada para visualización, control e interacción por voz.  
+- Mejoras en la detección de emociones y gestos faciales.  
+- Sistema que permite tanto control automático (por gestos) como interacción conversacional.  
 
 ---
 
@@ -37,12 +40,13 @@ También puedes aprovechar herramientas como **GitHub Copilot** o **ChatGPT** pa
 git clone https://github.com/estherlysuarez-ui/GESTICULINK.git
 ````
 
----
-
 ## 📌 Estado de la Rama
 
-Esta rama incluye la **primera versión** con:
-
+* Página web mejorada con nuevo modo de interacción por voz.
+* Sistema completo de reconocimiento facial con detección de emociones.
+* Integración de IA conversacional usando Gemini 2.5 Flash para interacción natural.
+* Mejoras en la precisión del reconocimiento facial.
+* Actualización de la imagen de la cabeza animatrónica.
 * Incorporación de la página web.
 * Integración del sistema de reconocimiento facial.
 

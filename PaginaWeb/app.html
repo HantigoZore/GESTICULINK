@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>HerlIA - Control de Emociones</title>
+    <title>HerlIA - Control de Emociones y Voz</title>
     <style>
         body {
             margin: 0;
@@ -21,119 +22,778 @@
             top: 20px;
             left: 20px;
             width: 150px;
+            z-index: 100;
+        }
+
+        .mode-selector {
+            margin-top: 100px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            padding: 15px 30px;
+            border: 2px solid #34b894;
+            background-color: rgba(52, 184, 148, 0.2);
+            color: #34b894;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mode-btn:hover {
+            background-color: rgba(52, 184, 148, 0.4);
+            transform: scale(1.05);
+        }
+
+        .mode-btn.active {
+            background-color: #34b894;
+            color: black;
+            box-shadow: 0 0 20px #34b894;
+        }
+
+        .mode-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #lock-msg {
+            color: #ff4444;
+            margin-top: 30px;
+            font-size: 22px;
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 68, 68, 0.2);
+            border-radius: 10px;
+            border: 2px solid #ff4444;
+        }
+
+        .main-container {
+            margin-top: 30px;
+            text-align: center;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
         .camera-container {
-            margin-top: 80px;
-            text-align: center;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .camera-container.active {
+            display: flex;
         }
 
         #video {
-            width: 800px;
-            height: 600px;
+            width: 100%;
+            max-width: 640px;
+            height: auto;
             border: 3px solid #34b894;
             border-radius: 10px;
+            box-shadow: 0 0 20px rgba(52, 184, 148, 0.5);
         }
 
         .emotion-display {
             margin-top: 20px;
-            font-size: 24px;
+            font-size: 28px;
             color: #34b894;
+            padding: 15px 30px;
+            background-color: rgba(52, 184, 148, 0.2);
+            border-radius: 10px;
+            border: 2px solid #34b894;
+        }
+
+        .voice-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            min-width: 400px;
+        }
+
+        .voice-container.active {
+            display: flex;
+        }
+
+        .chat-box {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            overflow-y: auto;
+            border: 2px solid #34b894;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: rgba(52, 184, 148, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 80%;
+            animation: fadeIn 0.3s;
+        }
+
+        .user-message {
+            background-color: #667eea;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .bot-message {
+            background-color: #34b894;
+            color: black;
+            margin-right: auto;
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .voice-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .voice-btn.mic {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .voice-btn.mic:hover {
+            background-color: #45a049;
+        }
+
+        .voice-btn.mic.listening {
+            background-color: #f44336;
+            animation: pulse 1s infinite;
+        }
+
+        .voice-btn.stop {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .voice-btn.reset {
+            background-color: #9e9e9e;
+            color: white;
+        }
+
+        .status-indicator {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-indicator.idle {
+            background-color: rgba(158, 158, 158, 0.3);
+            color: #9e9e9e;
+        }
+
+        .status-indicator.listening {
+            background-color: rgba(244, 67, 54, 0.3);
+            color: #f44336;
+        }
+
+        .status-indicator.thinking {
+            background-color: rgba(255, 152, 0, 0.3);
+            color: #ff9800;
+        }
+
+        .status-indicator.speaking {
+            background-color: rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            #video {
+                max-width: 100%;
+            }
+
+            .voice-container {
+                min-width: 100%;
+            }
+
+            .chat-box {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
+
 <body>
     <a href="home.html">
         <img src="./assets/images/LogoSinFondo.png" alt="Logo" class="logo">
     </a>
-    
-    <div id="lock-msg" style="color:red; margin-top:30px; font-size:22px; display:none;">
-        Solo un usuario puede usar el reconocimiento facial a la vez. Intenta más tarde.
+
+    <div class="mode-selector">
+        <button class="mode-btn" id="facialBtn">
+            <span class="emoji">😊</span> Reconocimiento Facial
+        </button>
+        <button class="mode-btn" id="voiceBtn">
+            <span class="emoji">🎤</span> Conversación por Voz
+        </button>
+        <button class="mode-btn" id="bothBtn">
+            <span class="emoji">🤖</span> Ambos (Completo)
+        </button>
     </div>
-    <div class="camera-container">
-        <video id="video" autoplay playsinline></video>
-        <div class="emotion-display">
-            Emoción detectada: <span id="emocion">Ninguna</span>
+
+    <div id="lock-msg">
+        ⚠️ Solo un usuario puede usar el reconocimiento facial a la vez. Intenta más tarde.
+    </div>
+
+    <div class="main-container">
+        <div class="content-wrapper">
+            <!-- Contenedor de Cámara -->
+            <div class="camera-container" id="cameraContainer">
+                <video id="video" autoplay playsinline></video>
+                <div class="emotion-display">
+                    Emoción detectada: <span id="emocion">Ninguna</span>
+                </div>
+            </div>
+
+            <!-- Contenedor de Voz -->
+            <div class="voice-container" id="voiceContainer">
+                <div class="chat-box" id="chatBox"></div>
+
+                <div class="voice-controls">
+                    <button class="voice-btn mic" id="micBtn">
+                        <span class="emoji">🎤</span> Hablar
+                    </button>
+                    <button class="voice-btn stop" id="stopVoiceBtn">
+                        <span class="emoji">⏹️</span> Detener
+                    </button>
+                    <button class="voice-btn reset" id="resetVoiceBtn">
+                        <span class="emoji">🔄</span> Reiniciar
+                    </button>
+                </div>
+
+                <div class="status-indicator idle" id="voiceStatus">
+                    Presiona "Hablar" para comenzar
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        // ============================================================
+        // CONFIGURACIÓN
+        // ============================================================
+        const FACIAL_API = 'http://127.0.0.1:5000';
+        const VOICE_API = 'http://127.0.0.1:5001';
+        const USER_ID = 'user_' + Date.now();
+
+        // ============================================================
+        // ELEMENTOS DOM
+        // ============================================================
         const video = document.getElementById('video');
         const emocionSpan = document.getElementById('emocion');
-        const cameraContainer = document.querySelector('.camera-container');
+        const cameraContainer = document.getElementById('cameraContainer');
+        const voiceContainer = document.getElementById('voiceContainer');
         const lockMsg = document.getElementById('lock-msg');
-        let intervalId = null;
+        const chatBox = document.getElementById('chatBox');
+        const voiceStatus = document.getElementById('voiceStatus');
 
+        const facialBtn = document.getElementById('facialBtn');
+        const voiceBtn = document.getElementById('voiceBtn');
+        const bothBtn = document.getElementById('bothBtn');
+        const micBtn = document.getElementById('micBtn');
+        const stopVoiceBtn = document.getElementById('stopVoiceBtn');
+        const resetVoiceBtn = document.getElementById('resetVoiceBtn');
+
+        // ============================================================
+        // VARIABLES DE ESTADO
+        // ============================================================
+        let currentMode = null;
+        let facialIntervalId = null;
+        let facialLockAcquired = false;
+        let currentEmotion = 'neutral';
+
+        // Variables de voz
+        let isListening = false;
+        let isSpeaking = false;
+        let recognition = null;
+        let synthesis = window.speechSynthesis;
+
+        // ============================================================
+        // WEB SPEECH API
+        // ============================================================
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'es-ES';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onresult = handleVoiceResult;
+            recognition.onerror = handleVoiceError;
+            recognition.onend = () => {
+                isListening = false;
+                micBtn.classList.remove('listening');
+                micBtn.innerHTML = '<span class="emoji">🎤</span> Hablar';
+            };
+        }
+
+        // ============================================================
+        // FUNCIONES DE MODO
+        // ============================================================
+        async function setMode(mode) {
+            console.log('🎯 Cambiando a modo:', mode);
+
+            // Limpiar modo anterior
+            await cleanupMode();
+
+            currentMode = mode;
+
+            // Actualizar botones
+            facialBtn.classList.remove('active');
+            voiceBtn.classList.remove('active');
+            bothBtn.classList.remove('active');
+
+            if (mode === 'facial') {
+                facialBtn.classList.add('active');
+                await startFacialMode();
+            } else if (mode === 'voice') {
+                voiceBtn.classList.add('active');
+                await startVoiceMode();
+            } else if (mode === 'both') {
+                bothBtn.classList.add('active');
+                await startBothMode();
+            }
+        }
+
+        async function cleanupMode() {
+            console.log('🧹 Limpiando modo anterior...');
+
+            // Detener reconocimiento facial
+            if (facialIntervalId) {
+                clearInterval(facialIntervalId);
+                facialIntervalId = null;
+            }
+
+            if (facialLockAcquired) {
+                await releaseLock();
+                facialLockAcquired = false;
+            }
+
+            // Detener cámara
+            if (video.srcObject) {
+                const tracks = video.srcObject.getTracks();
+                tracks.forEach(track => {
+                    track.stop();
+                    console.log('📷 Track detenido:', track.kind);
+                });
+                video.srcObject = null;
+            }
+
+            // Detener voz
+            stopListening();
+            stopSpeaking();
+
+            // Ocultar contenedores
+            cameraContainer.classList.remove('active');
+            voiceContainer.classList.remove('active');
+            lockMsg.style.display = 'none';
+        }
+
+        // ============================================================
+        // MODO: FACIAL
+        // ============================================================
+        async function startFacialMode() {
+            console.log('😊 Iniciando modo facial...');
+
+            const granted = await acquireLock();
+            if (!granted) {
+                console.error('❌ No se pudo obtener el lock');
+                lockMsg.style.display = 'block';
+                return;
+            }
+
+            facialLockAcquired = true;
+            cameraContainer.classList.add('active');
+
+            try {
+                console.log('📷 Solicitando acceso a cámara...');
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    },
+                    audio: false
+                });
+
+                console.log('✅ Cámara obtenida');
+                video.srcObject = stream;
+
+                // Esperar a que el video esté listo
+                video.onloadedmetadata = () => {
+                    console.log('✅ Video metadata cargada');
+                    video.play();
+                    startFacialRecognition();
+                };
+            } catch (err) {
+                console.error("❌ Error al acceder a la cámara:", err);
+                alert("No se pudo acceder a la cámara: " + err.message);
+                await releaseLock();
+                facialLockAcquired = false;
+                cameraContainer.classList.remove('active');
+            }
+        }
+
+        function startFacialRecognition() {
+            console.log('🧠 Iniciando reconocimiento facial...');
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 640;
+            canvas.height = 480;
+            const ctx = canvas.getContext('2d');
+
+            facialIntervalId = setInterval(async () => {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const dataURL = canvas.toDataURL('image/jpeg', 0.7);
+                    const base64Image = dataURL.split(',')[1];
+
+                    try {
+                        const response = await fetch(`${FACIAL_API}/emocion`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ image: base64Image })
+                        });
+                        const data = await response.json();
+                        currentEmotion = data.emocion || 'neutral';
+                        emocionSpan.textContent = currentEmotion;
+                    } catch (err) {
+                        console.error("❌ Error enviando la imagen:", err);
+                        emocionSpan.textContent = "Error";
+                    }
+                }
+            }, 1000);
+        }
+
+        // ============================================================
+        // MODO: VOZ
+        // ============================================================
+        async function startVoiceMode() {
+            console.log('🎤 Iniciando modo voz...');
+            voiceContainer.classList.add('active');
+            addVoiceMessage('¡Hola! Soy HerlIA. Presiona "Hablar" para comenzar nuestra conversación.', false);
+        }
+
+        // ============================================================
+        // MODO: AMBOS
+        // ============================================================
+        async function startBothMode() {
+            console.log('🤖 Iniciando modo combinado...');
+
+            const granted = await acquireLock();
+            if (!granted) {
+                console.error('❌ No se pudo obtener el lock');
+                lockMsg.style.display = 'block';
+                return;
+            }
+
+            facialLockAcquired = true;
+            cameraContainer.classList.add('active');
+            voiceContainer.classList.add('active');
+
+            try {
+                console.log('📷 Solicitando acceso a cámara...');
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    },
+                    audio: false
+                });
+
+                console.log('✅ Cámara obtenida');
+                video.srcObject = stream;
+
+                video.onloadedmetadata = () => {
+                    console.log('✅ Video metadata cargada');
+                    video.play();
+                    startFacialRecognition();
+                };
+
+                addVoiceMessage('¡Hola! Estoy viendo tus emociones y escuchando. Háblame cuando quieras.', false);
+            } catch (err) {
+                console.error("❌ Error al acceder a la cámara:", err);
+                alert("No se pudo acceder a la cámara: " + err.message);
+                await releaseLock();
+                facialLockAcquired = false;
+                cameraContainer.classList.remove('active');
+            }
+        }
+
+        // ============================================================
+        // FUNCIONES DE LOCK
+        // ============================================================
         async function acquireLock() {
             try {
-                const res = await fetch('http://127.0.0.1:5000/lock', {method: 'POST'});
+                console.log('🔒 Intentando adquirir lock...');
+                const res = await fetch(`${FACIAL_API}/lock`, { method: 'POST' });
                 const data = await res.json();
+                console.log('🔒 Respuesta lock:', data);
                 return data.status === "ok";
             } catch (e) {
+                console.error("❌ Error acquiring lock:", e);
                 return false;
             }
         }
+
         async function releaseLock() {
             try {
-                await fetch('http://127.0.0.1:5000/unlock', {method: 'POST'});
-            } catch (e) {}
+                console.log('🔓 Liberando lock...');
+                await fetch(`${FACIAL_API}/unlock`, { method: 'POST' });
+            } catch (e) {
+                console.error("❌ Error releasing lock:", e);
+            }
         }
 
-        async function startApp() {
-            const granted = await acquireLock();
-            if (!granted) {
-                lockMsg.style.display = 'block';
-                cameraContainer.style.display = 'none';
+        // ============================================================
+        // FUNCIONES DE VOZ
+        // ============================================================
+        function addVoiceMessage(text, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            const emoji = isUser ? '👤' : '🤖';
+            messageDiv.innerHTML = `<span class="emoji">${emoji}</span> ${text}`;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function updateVoiceStatus(text, className = 'idle') {
+            voiceStatus.textContent = text;
+            voiceStatus.className = 'status-indicator ' + className;
+        }
+
+        function startListening() {
+            if (!recognition) {
+                alert('Tu navegador no soporta reconocimiento de voz. Usa Chrome o Edge.');
                 return;
             }
-            cameraContainer.style.display = '';
-            lockMsg.style.display = 'none';
 
-            // Abrir la cámara del computador
-            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-                .then(stream => {
-                    video.srcObject = stream;
-                })
-                .catch(err => {
-                    console.error("Error al acceder a la cámara:", err);
-                    alert("No se pudo acceder a la cámara");
-                });
+            if (isListening || isSpeaking) return;
 
-            // Crear canvas para capturar imagen
-            const canvas = document.createElement('canvas');
-            canvas.width = 800;
-            canvas.height = 600;
-            const ctx = canvas.getContext('2d');
-
-            // Enviar frame cada 1 segundo
-            intervalId = setInterval(() => {
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const dataURL = canvas.toDataURL('image/jpeg', 0.7);
-                const base64Image = dataURL.split(',')[1];
-
-                fetch('http://127.0.0.1:5000/emocion', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ image: base64Image })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Emoción detectada:", data.emocion);
-                    emocionSpan.textContent = data.emocion;
-                })
-                .catch(err => {
-                    console.error("Error enviando la imagen:", err);
-                    emocionSpan.textContent = "Error";
-                });
-            }, 1000);
-
-            window.addEventListener('beforeunload', async () => {
-                clearInterval(intervalId);
-                await releaseLock();
-            });
+            try {
+                recognition.start();
+                isListening = true;
+                micBtn.classList.add('listening');
+                micBtn.innerHTML = '<span class="emoji">🎤</span> Escuchando...';
+                updateVoiceStatus('🎤 Escuchando...', 'listening');
+            } catch (e) {
+                console.error('Error al iniciar reconocimiento:', e);
+            }
         }
 
-        startApp();
+        function stopListening() {
+            if (recognition && isListening) {
+                recognition.stop();
+            }
+        }
+
+        async function handleVoiceResult(event) {
+            const transcript = event.results[0][0].transcript;
+            console.log('📝 Reconocido:', transcript);
+
+            addVoiceMessage(transcript, true);
+            updateVoiceStatus('🤔 Pensando...', 'thinking');
+
+            try {
+                const response = await fetch(`${VOICE_API}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: transcript,
+                        user_id: USER_ID,
+                        emocion: currentEmotion
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                if (data.respuesta) {
+                    addVoiceMessage(data.respuesta, false);
+                    speak(data.respuesta);
+                } else {
+                    throw new Error('No response');
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                addVoiceMessage('Lo siento, hubo un error: ' + error.message, false);
+                updateVoiceStatus('Error - intenta de nuevo', 'idle');
+            }
+        }
+
+        function handleVoiceError(event) {
+            console.error('❌ Error de reconocimiento:', event.error);
+            if (event.error === 'no-speech') {
+                updateVoiceStatus('No te escuché, intenta de nuevo', 'idle');
+            } else {
+                updateVoiceStatus('Error: ' + event.error, 'idle');
+            }
+        }
+
+        function speak(text) {
+            if (isSpeaking) {
+                synthesis.cancel();
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'es-ES';
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+
+            const voices = synthesis.getVoices();
+            const spanishVoice = voices.find(voice => voice.lang.startsWith('es'));
+            if (spanishVoice) {
+                utterance.voice = spanishVoice;
+            }
+
+            utterance.onstart = () => {
+                isSpeaking = true;
+                updateVoiceStatus('🔊 Hablando...', 'speaking');
+            };
+
+            utterance.onend = () => {
+                isSpeaking = false;
+                updateVoiceStatus('Listo para hablar', 'idle');
+            };
+
+            utterance.onerror = (error) => {
+                console.error('❌ Error de síntesis:', error);
+                isSpeaking = false;
+                updateVoiceStatus('Listo para hablar', 'idle');
+            };
+
+            synthesis.speak(utterance);
+        }
+
+        function stopSpeaking() {
+            if (isSpeaking) {
+                synthesis.cancel();
+                isSpeaking = false;
+                updateVoiceStatus('Listo para hablar', 'idle');
+            }
+        }
+
+        async function resetVoiceConversation() {
+            try {
+                await fetch(`${VOICE_API}/reset`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: USER_ID })
+                });
+
+                chatBox.innerHTML = '';
+                addVoiceMessage('¡Conversación reiniciada! ¿En qué puedo ayudarte?', false);
+                updateVoiceStatus('Conversación reiniciada', 'idle');
+            } catch (error) {
+                console.error('❌ Error al reiniciar:', error);
+            }
+        }
+
+        // ============================================================
+        // EVENT LISTENERS
+        // ============================================================
+        facialBtn.addEventListener('click', () => setMode('facial'));
+        voiceBtn.addEventListener('click', () => setMode('voice'));
+        bothBtn.addEventListener('click', () => setMode('both'));
+
+        micBtn.addEventListener('click', startListening);
+        stopVoiceBtn.addEventListener('click', () => {
+            stopListening();
+            stopSpeaking();
+        });
+        resetVoiceBtn.addEventListener('click', resetVoiceConversation);
+
+        // Cleanup al cerrar
+        window.addEventListener('beforeunload', async () => {
+            await cleanupMode();
+        });
+
+        // Cargar voces
+        if (synthesis.onvoiceschanged !== undefined) {
+            synthesis.onvoiceschanged = () => {
+                console.log('🔊 Voces disponibles:', synthesis.getVoices().length);
+            };
+        }
+
+        console.log('✅ Sistema inicializado. Selecciona un modo.');
     </script>
 </body>
+
 </html>
