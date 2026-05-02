@@ -1,25 +1,28 @@
-# 🤖 Códigos de Reconocimiento Facial
+# 🤖 Facial Recognition Code
 
-Este repositorio contiene el archivo Reconocimiento.py, encargado de levantar el servidor en Python en el PC local.
-Es importante recordar que:
+This repository contains the *Reconocimiento.py* file, responsible for starting the Python server on the local PC.
+It is important to remember that:
 
-**-El servidor debe estar corriendo antes de abrir la página web.**
+**- The server must be running before opening the web page.**
 
-**-El dispositivo donde se abre la página y el PC local que corre el servidor deben estar conectados a la misma red.**
+**- The device where the web page is opened and the local PC running the server must be connected to the same network.**
 
-## 📦 Instalación de librerías
+## 📦 Library Installation
 
-Para instalar todas las dependencias necesarias, ejecuta en la terminal o bash el siguiente comando dentro de la carpeta del proyecto:
+To install all the required dependencies, run the following command in the terminal or bash inside the project folder:
+
 ```bash
 pip install -r librerias.txt
 ```
 
-Con esto, todas las librerías quedarán instaladas y podrás ejecutar el código sin problemas. ✅
+This will install all the libraries, allowing you to run the code without issues. ✅
 
-## 🚀 Ejecución del servidor
+## 🚀 Running the Server
 
-Una vez instaladas las dependencias, inicia el servidor ejecutando:
+Once the dependencies are installed, start the server by running:
+
 ```bash
 python Reconocimiento.py
 ```
-El servidor quedará activo y listo para recibir las peticiones desde la página web.
+
+The server will be active and ready to receive requests from the web page.

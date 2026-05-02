@@ -1,37 +1,37 @@
-# 🌐 Página Web – Versión Final
+# 🌐 Web Page – Final Version
 
-Esta carpeta contiene el código de la versión final de la página web.
-Actualmente, la página se encuentra completamente funcional, incluyendo la apertura de la cámara y la conexión con el servidor local.
+This folder contains the code for the final version of the website.
+Currently, the page is fully functional, including camera access and connection to the local server.
 
-🔜 Pendiente: únicamente falta agregar las imágenes correspondientes al archivo proceso.html.
+🔜 Pending: only the images corresponding to the *proceso.html* file still need to be added.
 
-## 🚀 Cómo ejecutar la página
+## 🚀 How to run the page
 
-Existen dos formas de correr el proyecto en un servidor local:
+There are two ways to run the project on a local server:
 
-**1. Usando Python (recomendado)**
+**1. Using Python (recommended)**
 
-Desde la terminal, ubícate en la carpeta donde se encuentra el archivo principal (index.html) y ejecuta:
+From the terminal, navigate to the folder where the main file (*index.html*) is located and run:
 
 ```bash
 python -m http.server 8000
-````
+```
 
-Luego, abre en el navegador:
-👉 http://localhost:8000
+Then open in your browser:
+👉 [http://localhost:8000](http://localhost:8000)
 
-**2. Usando la extensión Live Server (Visual Studio Code)**
+**2. Using the Live Server extension (Visual Studio Code)**
 
-Instala la extensión Live Server en VS Code.
+Install the Live Server extension in VS Code.
 
-Haz clic derecho sobre home.html y selecciona Open with Live Server.
+Right-click on *home.html* and select **Open with Live Server**.
 
-El navegador se abrirá automáticamente mostrando la página.
+The browser will automatically open displaying the page.
 
-## 📌 Notas
+## 📌 Notes
 
-Esta es la versión final del sitio web.
+This is the final version of the website.
 
-El único ajuste pendiente es la inclusión de las imágenes en proceso.html.
+The only pending adjustment is adding the images in *proceso.html*.
 
-El resto de la funcionalidad se encuentra lista para su uso y pruebas.
+All other functionality is ready for use and testing.

@@ -4,65 +4,62 @@
 
 # GESTICULINK
 
-**Cabeza Animatrónica GESTICULINK**  
-Repositorio oficial del proyecto GESTICULINK, un sistema capaz de imitar gestos humanos en tiempo real mediante el uso de microcontroladores, reconocimiento facial y una interfaz web.
+**GESTICULINK Animatronic Head**  
+Official repository of the **GESTICULINK** project, a system capable of **mimicking human gestures in real-time** using microcontrollers, facial recognition, and a web interface.
 
 ---
 
-## 📂 Estructura del Repositorio
+## 📂 Repository Structure
 
-El repositorio está organizado en cuatro carpetas principales:
+The repository is organized into four main folders:
 
-- [Microcontrolador](/Microcontrolador) → Contiene los códigos para el control del hardware y la animatrónica.  
-- [ReconocimientoFacial](/ReconocimientoFacial)  → Implementación del sistema de visión por computadora para detectar gestos y expresiones faciales.  
-- [ReconocimientoVoz](/ReconocimientoVoz)  → Sistema de conversación con IA integrada (Gemini 2.5 Flash) para interacción por voz.
-- [PaginaWeb](/PaginaWeb)  → Código de la interfaz web para monitoreo y control del sistema.  
-
----
-
-## 🚀 Características
-
-- Integración de hardware (microcontrolador) con software de reconocimiento facial.  
-- Sistema de reconocimiento de voz con IA integrada (Gemini 2.5 Flash) para conversación natural.  
-- Comunicación en tiempo real entre los módulos.  
-- Interfaz web mejorada para visualización, control e interacción por voz.  
-- Mejoras en la detección de emociones y gestos faciales.  
-- Sistema que permite tanto control automático (por gestos) como interacción conversacional.  
+- [Microcontrolador](/Microcontrolador) → Contains code for hardware control and the animatronic system.  
+- [ReconocimientoFacial](/ReconocimientoFacial) → Implementation of the computer vision system to detect facial gestures and expressions.  
+- [ReconocimientoVoz](/ReconocimientoVoz) → Voice conversation system with integrated AI (Gemini 2.5 Flash) for voice interaction.
+- [PaginaWeb](/PaginaWeb) → Code for the web interface to monitor and control the system.  
 
 ---
 
-## 🛠️ Uso del Repositorio
+## 🚀 Features
 
-Puedes clonar este repositorio y vincularlo a **Visual Studio Code** para un entorno de desarrollo más cómodo.  
-También puedes aprovechar herramientas como **GitHub Copilot** o **ChatGPT** para optimizar el flujo de trabajo y colaborar mediante **Pull Requests**.
+- Integration of hardware (microcontroller) with facial recognition software.  
+- Voice recognition system with integrated AI (Gemini 2.5 Flash) for natural conversation.  
+- Real-time communication between modules.  
+- Enhanced web interface for monitoring, control, and voice interaction.  
+- Improvements in emotion and facial gesture detection.  
+- System that enables both automatic control (by gestures) and conversational interaction.  
+
+---
+
+## 🛠️ Usage
+
+You can clone this repository and open it in **Visual Studio Code** for a more comfortable development environment.  
+You can also leverage tools like **GitHub Copilot** or **ChatGPT** to optimize your workflow and collaborate via **Pull Requests**.
 
 ```bash
-git clone https://github.com/estherlysuarez-ui/GESTICULINK.git
-````
+git clone https://github.com/HantigoZore/GESTICULINK.gi
+```
 
-## 📌 Estado de la Rama
+## 📌 Branch Status
 
-* Página web mejorada con nuevo modo de interacción por voz.
-* Sistema completo de reconocimiento facial con detección de emociones.
-* Integración de IA conversacional usando Gemini 2.5 Flash para interacción natural.
-* Mejoras en la precisión del reconocimiento facial.
-* Actualización de la imagen de la cabeza animatrónica.
-* Incorporación de la página web.
-* Integración del sistema de reconocimiento facial.
+This branch includes significant improvements:
 
----
+- Enhanced web interface with new voice interaction mode.
+- Complete facial recognition system with emotion detection.
+- Integration of conversational AI using Gemini 2.5 Flash for natural interaction.
+- Improvements in facial recognition accuracy.
+- Updated animatronic head image.
 
-## 🤝 Contribución
+## 🤝 Contributing
 
-Las contribuciones son bienvenidas. Puedes abrir un **issue** para reportar problemas o proponer mejoras, y enviar un **pull request** con tus cambios.
+Contributions are welcome! You can open an issue to report bugs or suggest improvements, and submit a pull request with your changes.
 
----
+## 📄 License
 
-## 📄 Licencia
+This project is distributed under the MIT License.
+Consult the file [LICENSE](LICENSE)
 
-Este proyecto se distribuye bajo la licencia **MIT**.
-Consulta el archivo [LICENSE](LICENSE) para más detalles.
+## 🌐 Español
 
-## 🌐 English
-
-Si prefieres leer en inglés, revisa la versión en inglés: [README.en.md](README.en.md)
+To read in Spanish, check the Spanish version: [README.md](README.md)
+See the LICENSE file for more details.
