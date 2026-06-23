@@ -176,10 +176,11 @@ def detectar_emocion(frame):
     # 1. Preprocesamiento rápido
     frame_processed = preprocesar_imagen_rapido(frame)
     if frame_processed is None:
-        return "neutral"
+        return "neutral", 0, {}
     
     # 2. Detección con FER (principal y más rápido)
-    e_fer, c_fer, _ = detectar_emocion_fer_rapido(frame_processed)
+    e_fer, c_fer, scores_fer = detectar_emocion_fer_rapido(frame_processed)
+    scores_finales = scores_fer
     
     # 3. Si FER tiene buena confianza, usar solo FER
     if c_fer >= Config.CONFIANZA_MINIMA:
@@ -188,8 +189,14 @@ def detectar_emocion(frame):
     else:
         # 4. Solo si FER tiene baja confianza, usar DeepFace cada 2 frames
         if frame_count % 2 == 0:
-            e_df, c_df, _ = detectar_emocion_deepface_cache(frame_processed)
+            e_df, c_df, scores_df = detectar_emocion_deepface_cache(frame_processed)
             emotion_final, confianza_final = fusionar_simple(e_fer, c_fer, e_df, c_df)
+            # Mezclar scores de ambos modelos
+            if scores_df:
+                scores_finales = {
+                    k: (scores_fer.get(k, 0) + scores_df.get(k, 0)) / 2
+                    for k in Config.EMOCIONES_PERMITIDAS
+                }
         else:
             emotion_final = e_fer
             confianza_final = c_fer
@@ -207,14 +214,14 @@ def detectar_emocion(frame):
     
     # 7. Evitar fluctuaciones innecesarias
     if ultima_emocion == emotion_final and abs(confianza_final - ultima_confianza) < 10:
-        return ultima_emocion
+        return ultima_emocion, ultima_confianza, scores_finales
     
     ultima_emocion = emotion_final
     ultima_confianza = confianza_final
     
     logger.info(f"🧠 Emoción: {emotion_final} ({confianza_final:.1f}%)")
     
-    return emotion_final
+    return emotion_final, confianza_final, scores_finales
 
 # ============================================================================
 # COMUNICACIÓN CON ESP32
@@ -280,7 +287,7 @@ def emocion():
             return jsonify({'error': 'Decode failed'}), 400
         
         # Detectar
-        emocion_detectada = detectar_emocion(frame)
+        emocion_detectada, confianza_detectada, scores = detectar_emocion(frame)
         
         # Enviar a ESP32 en thread separado (no bloquear respuesta)
         threading.Thread(target=enviar_a_esp32, args=(emocion_detectada,), daemon=True).start()
@@ -288,9 +295,14 @@ def emocion():
         elapsed = (time.time() - start_time) * 1000
         logger.info(f"⏱️ Tiempo: {elapsed:.0f}ms")
         
+        # Normalizar scores a porcentaje (0-100)
+        scores_pct = {k: round(float(v) * 100, 1) if v <= 1.0 else round(float(v), 1)
+                      for k, v in scores.items()}
+        
         return jsonify({
             'emocion': emocion_detectada,
-            'confianza': float(ultima_confianza),
+            'confianza': float(confianza_detectada),
+            'scores': scores_pct,
             'tiempo_ms': round(elapsed, 2)
         })
     

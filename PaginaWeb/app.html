@@ -120,6 +120,88 @@
             border: 2px solid #34b894;
         }
 
+        /* Panel de accuracy por emoción */
+        .accuracy-panel {
+            margin-top: 15px;
+            width: 100%;
+            max-width: 640px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 2px solid #34b894;
+            border-radius: 10px;
+            padding: 15px 20px;
+            box-sizing: border-box;
+        }
+
+        .accuracy-panel h3 {
+            color: #34b894;
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .emotion-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .emotion-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .emotion-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 110px;
+            font-size: 13px;
+            color: #ccc;
+            flex-shrink: 0;
+        }
+
+        .emotion-label.active-emotion {
+            color: #34b894;
+            font-weight: bold;
+        }
+
+        .emotion-bar-bg {
+            flex: 1;
+            height: 18px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 9px;
+            overflow: hidden;
+        }
+
+        .emotion-bar-fill {
+            height: 100%;
+            border-radius: 9px;
+            transition: width 0.5s ease, background-color 0.3s ease;
+            width: 0%;
+        }
+
+        .emotion-bar-fill.bar-happy    { background: linear-gradient(90deg, #f9a825, #ffee58); }
+        .emotion-bar-fill.bar-angry    { background: linear-gradient(90deg, #b71c1c, #ef5350); }
+        .emotion-bar-fill.bar-sad      { background: linear-gradient(90deg, #1565c0, #42a5f5); }
+        .emotion-bar-fill.bar-surprise { background: linear-gradient(90deg, #6a1b9a, #ce93d8); }
+        .emotion-bar-fill.bar-neutral  { background: linear-gradient(90deg, #424242, #9e9e9e); }
+        .emotion-bar-fill.bar-active   { box-shadow: 0 0 8px rgba(52, 184, 148, 0.6); }
+
+        .emotion-pct {
+            width: 42px;
+            text-align: right;
+            font-size: 13px;
+            font-weight: bold;
+            color: #aaa;
+            flex-shrink: 0;
+        }
+
+        .emotion-pct.active-pct {
+            color: #34b894;
+        }
+
         .voice-container {
             display: none;
             flex-direction: column;
@@ -318,6 +400,43 @@
                 <div class="emotion-display">
                     Emoción detectada: <span id="emocion">Ninguna</span>
                 </div>
+
+                <!-- Panel de accuracy por emoción -->
+                <div class="accuracy-panel" id="accuracyPanel">
+                    <h3>📊 Confianza por emoción</h3>
+
+                    <div class="emotion-row" id="row-happy">
+                        <div class="emotion-label" id="label-happy">😊 Feliz</div>
+                        <div class="emotion-bar-bg">
+                            <div class="emotion-bar-fill bar-happy" id="bar-happy"></div>
+                        </div>
+                        <div class="emotion-pct" id="pct-happy">0%</div>
+                    </div>
+
+                    <div class="emotion-row" id="row-angry">
+                        <div class="emotion-label" id="label-angry">😠 Enojado</div>
+                        <div class="emotion-bar-bg">
+                            <div class="emotion-bar-fill bar-angry" id="bar-angry"></div>
+                        </div>
+                        <div class="emotion-pct" id="pct-angry">0%</div>
+                    </div>
+
+                    <div class="emotion-row" id="row-sad">
+                        <div class="emotion-label" id="label-sad">😢 Triste</div>
+                        <div class="emotion-bar-bg">
+                            <div class="emotion-bar-fill bar-sad" id="bar-sad"></div>
+                        </div>
+                        <div class="emotion-pct" id="pct-sad">0%</div>
+                    </div>
+
+                    <div class="emotion-row" id="row-surprise">
+                        <div class="emotion-label" id="label-surprise">😲 Sorpresa</div>
+                        <div class="emotion-bar-bg">
+                            <div class="emotion-bar-fill bar-surprise" id="bar-surprise"></div>
+                        </div>
+                        <div class="emotion-pct" id="pct-surprise">0%</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Contenedor de Voz -->
@@ -403,8 +522,52 @@
         }
 
         // ============================================================
-        // FUNCIONES DE MODO
+        // ACCURACY BARS
         // ============================================================
+        const EMOTION_MAP = {
+            happy:    { labelId: 'label-happy',    barId: 'bar-happy',    pctId: 'pct-happy'    },
+            angry:    { labelId: 'label-angry',    barId: 'bar-angry',    pctId: 'pct-angry'    },
+            sad:      { labelId: 'label-sad',      barId: 'bar-sad',      pctId: 'pct-sad'      },
+            surprise: { labelId: 'label-surprise', barId: 'bar-surprise', pctId: 'pct-surprise' },
+        };
+
+        function updateAccuracyBars(scores, activeEmotion) {
+            Object.entries(EMOTION_MAP).forEach(([key, ids]) => {
+                const val = scores && scores[key] != null ? scores[key] : 0;
+                const isActive = key === activeEmotion;
+
+                const bar = document.getElementById(ids.barId);
+                const pct = document.getElementById(ids.pctId);
+                const lbl = document.getElementById(ids.labelId);
+
+                if (!bar || !pct || !lbl) return;
+
+                bar.style.width = Math.min(val, 100) + '%';
+
+                if (isActive) {
+                    bar.classList.add('bar-active');
+                    pct.classList.add('active-pct');
+                    lbl.classList.add('active-emotion');
+                } else {
+                    bar.classList.remove('bar-active');
+                    pct.classList.remove('active-pct');
+                    lbl.classList.remove('active-emotion');
+                }
+
+                pct.textContent = val.toFixed(1) + '%';
+            });
+        }
+
+        function resetAccuracyBars() {
+            Object.values(EMOTION_MAP).forEach(ids => {
+                const bar = document.getElementById(ids.barId);
+                const pct = document.getElementById(ids.pctId);
+                const lbl = document.getElementById(ids.labelId);
+                if (bar) { bar.style.width = '0%'; bar.classList.remove('bar-active'); }
+                if (pct) { pct.textContent = '0%'; pct.classList.remove('active-pct'); }
+                if (lbl) { lbl.classList.remove('active-emotion'); }
+            });
+        }
         async function setMode(mode) {
             console.log('🎯 Cambiando a modo:', mode);
 
@@ -462,6 +625,8 @@
             cameraContainer.classList.remove('active');
             voiceContainer.classList.remove('active');
             lockMsg.style.display = 'none';
+            resetAccuracyBars();
+            emocionSpan.textContent = 'Ninguna';
         }
 
         // ============================================================
@@ -531,9 +696,11 @@
                         const data = await response.json();
                         currentEmotion = data.emocion || 'neutral';
                         emocionSpan.textContent = currentEmotion;
+                        updateAccuracyBars(data.scores || {}, currentEmotion);
                     } catch (err) {
                         console.error("❌ Error enviando la imagen:", err);
                         emocionSpan.textContent = "Error";
+                        resetAccuracyBars();
                     }
                 }
             }, 1000);
