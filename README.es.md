@@ -35,7 +35,7 @@ El repositorio está organizado en cuatro carpetas principales:
 
 Puedes clonar este repositorio y vincularlo a **Visual Studio Code** para un entorno de desarrollo más cómodo.  
 También puedes aprovechar herramientas como **GitHub Copilot** o **ChatGPT** para optimizar el flujo de trabajo y colaborar mediante **Pull Requests**.
-popo
+
 ```bash
 git clone https://github.com/HantigoZore/GESTICULINK.gi
 ````
